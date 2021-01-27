@@ -19,7 +19,7 @@ const clickAdd = () => {
 
 function showTask(todos) {
   todoContent.innerText = "";
-  todos.forEach((todo) => {
+  todos.forEach((todo, i) => {
     const tr = document.createElement('tr');
     todoContent.appendChild(tr)
     const tableId = document.createElement('td');
@@ -27,7 +27,7 @@ function showTask(todos) {
     const tableStatus = document.createElement('td');
     const tableDelete = document.createElement('td');
 
-    tableId.innerText = todo.id;
+    tableId.innerText = i;
     tableComment.innerText = todo.comment;
 
     tr.appendChild(tableId);
@@ -36,7 +36,7 @@ function showTask(todos) {
     tr.appendChild(tableDelete);
 
     tableStatus.appendChild(statusButton(todo));
-    tableDelete.appendChild(deleteButton(todo, tr));
+    tableDelete.appendChild(deleteButton(todo.id));
   })
 }
 
@@ -53,16 +53,19 @@ function statusButton(todo) {
   return statusButton;
 };
 
-function deleteButton(tr) {
+function deleteButton(id) {
   const deleteButton = document.createElement('button');
-  let index = tr.rowIndex - 1;
   deleteButton.textContent = '削除';
   deleteButton.addEventListener('click', () => {
+    const targetIndex = todos.findIndex(todo => {
+      return todo.id === id;
+    })
+    todos.splice(targetIndex, 1);
+    showTask(todos)
+    todos.forEach((todo, i) => {
+      todo[i].id = i;
+    })
 
-    // const deleteTarget = deleteButton.parentNode.parentNode
-    // todoContent.removeChild(deleteTarget);
-    todos.splice(index, 1);
-    showTask();
   });
   return deleteButton;
 };
