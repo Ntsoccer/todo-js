@@ -14,11 +14,11 @@ const clickAdd = () => {
   todos.push(todo);
 
   showTask(todos);
-  content.value = "";
+  content.value = '';
 }
 
 function showTask(todos) {
-  todoContent.innerText = "";
+  todoContent.innerText = '';
   todos.forEach((todo, i) => {
     const tr = document.createElement('tr');
     todoContent.appendChild(tr)
@@ -46,8 +46,10 @@ function statusButton(todo) {
   statusButton.addEventListener('click', () => {
     if (todo.status === '作業中') {
       todo.status = '完了';
+      showTask(todos)
     } else {
       todo.status = '作業中';
+      showTask(todos)
     }
   });
   return statusButton;
@@ -61,11 +63,10 @@ function deleteButton(id) {
       return todo.id === id;
     })
     todos.splice(targetIndex, 1);
+    for (let i = targetIndex; i < todos.length; i++) {
+      todos[i].id = i
+    }
     showTask(todos)
-    todos.forEach((todo, i) => {
-      todo[i].id = i;
-    })
-
   });
   return deleteButton;
 };
