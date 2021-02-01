@@ -59,13 +59,8 @@ function deleteButton(id) {
   const deleteButton = document.createElement('button');
   deleteButton.textContent = '削除';
   deleteButton.addEventListener('click', () => {
-    const targetIndex = todos.findIndex(todo => {
-      return todo.id === id;
-    })
-    todos.splice(targetIndex, 1);
-    for (let i = targetIndex; i < todos.length; i++) {
-      todos[i].id = i
-    }
+    todos.splice(id, 1);
+    todos.forEach((todo, index) => todo.id = index);
     showTask(todos)
   });
   return deleteButton;
