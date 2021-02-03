@@ -3,6 +3,9 @@ let todos = [];
 const todoContent = document.getElementById('todos');
 const content = document.getElementById('content');
 const radioButton = document.getElementsByName('status');
+const all = document.getElementById('all');
+const work = document.getElementById('work');
+const complete = document.getElementById('complete');
 
 const clickAdd = () => {
   const todo = {
@@ -46,10 +49,10 @@ function statusButton(todo) {
   statusButton.addEventListener('click', () => {
     if (todo.status === '作業中') {
       todo.status = '完了';
-      showTask(todos)
+      filterTask();
     } else {
       todo.status = '作業中';
-      showTask(todos)
+      filterTask();
     }
   });
   return statusButton;
@@ -66,21 +69,26 @@ function deleteButton(id) {
   return deleteButton;
 };
 
-const filterTask = radioButton.forEach(btn => {
-  btn.addEventListener('click', (e) => {
-    if (e.target.value === "all") {
-      return showTask(todos)
-    } else if (e.target.value === "work") {
-      const working = todos.filter((todo) => {
-        return todo.status === "作業中";
-      })
-      return showTask(working);
-    } else if (e.target.value = "complete") {
-      const completed = todos.filter((todo) => {
-        return todo.status === "完了";
-      })
-      return showTask(completed)
-    }
+const filterTask = () => {
+  if (all.checked) {
+    return showTask(todos);
+  } else if (work.checked) {
+    const working = todos.filter((todo) => {
+      return todo.status === "作業中";
+    })
+    return showTask(working);
+  } else if (complete.checked) {
+    const completed = todos.filter((todo) => {
+      return todo.status === "完了";
+    })
+    return showTask(completed)
+  }
+}
+
+
+radioButton.forEach((btn, index) => {
+  radioButton[index].addEventListener('click', () => {
+    filterTask();
   })
 })
 
