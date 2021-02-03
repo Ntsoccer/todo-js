@@ -66,4 +66,22 @@ function deleteButton(id) {
   return deleteButton;
 };
 
+const filterTask = radioButton.forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    if (e.target.value === "all") {
+      return showTask(todos)
+    } else if (e.target.value === "work") {
+      const working = todos.filter((todo) => {
+        return todo.status === "作業中";
+      })
+      return showTask(working);
+    } else if (e.target.value = "complete") {
+      const completed = todos.filter((todo) => {
+        return todo.status === "完了";
+      })
+      return showTask(completed)
+    }
+  })
+})
+
 document.getElementById('add_btn').addEventListener('click', () => clickAdd());
