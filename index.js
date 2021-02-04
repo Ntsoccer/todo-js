@@ -17,6 +17,7 @@ const clickAdd = () => {
   todos.push(todo);
 
   showTask(todos);
+  filterTask();
   content.value = '';
 }
 
